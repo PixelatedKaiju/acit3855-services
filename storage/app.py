@@ -91,8 +91,8 @@ def get_search_readings(start_timestamp, end_timestamp):
 def get_purchase_readings(start_timestamp, end_timestamp):
     session = make_session()
 
-    start = datetime.strptime(start_timestamp, "%Y-%m-%dT%H:%M:%S.%fZ")
-    end = datetime.strptime(end_timestamp, "%Y-%m-%dT%H:%M:%S.%fZ")
+    start = datetime.strptime(start_timestamp.rstrip('Z'), "%Y-%m-%dT%H:%M:%S.%f")
+    end = datetime.strptime(end_timestamp.rstrip('Z'), "%Y-%m-%dT%H:%M:%S.%f")
 
     statement = select(PurchaseReading).where(
         PurchaseReading.date_created >= start

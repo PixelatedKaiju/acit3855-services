@@ -1,0 +1,200 @@
+2025-10-09 09:36:26,843 - basicLogger - INFO - Received event search_reading with trace id 1760027786843701400
+2025-10-09 09:36:27,033 - basicLogger - INFO - Received event search_reading with trace id 1760027787033086000
+2025-10-09 09:36:27,235 - basicLogger - INFO - Received event search_reading with trace id 1760027787235284900
+2025-10-09 09:36:27,435 - basicLogger - INFO - Received event search_reading with trace id 1760027787435788200
+2025-10-09 09:36:27,634 - basicLogger - INFO - Received event search_reading with trace id 1760027787634237600
+2025-10-09 09:36:29,938 - basicLogger - INFO - Response for event search_reading (id: 1760027786843701400) has status 201
+2025-10-09 09:36:29,938 - basicLogger - INFO - Received event search_reading with trace id 1760027789938546800
+2025-10-09 09:36:30,072 - basicLogger - INFO - Response for event search_reading (id: 1760027787033086000) has status 201
+2025-10-09 09:36:30,072 - basicLogger - INFO - Received event search_reading with trace id 1760027790072821300
+2025-10-09 09:36:30,307 - basicLogger - INFO - Response for event search_reading (id: 1760027787235284900) has status 201
+2025-10-09 09:36:30,307 - basicLogger - INFO - Received event search_reading with trace id 1760027790307001200
+2025-10-09 09:36:30,497 - basicLogger - INFO - Response for event search_reading (id: 1760027787435788200) has status 201
+2025-10-09 09:36:30,498 - basicLogger - INFO - Received event search_reading with trace id 1760027790498268600
+2025-10-09 09:36:30,647 - basicLogger - INFO - Response for event search_reading (id: 1760027787634237600) has status 201
+2025-10-09 09:36:30,647 - basicLogger - INFO - Received event search_reading with trace id 1760027790647288800
+2025-10-09 09:36:32,435 - basicLogger - INFO - Response for event search_reading (id: 1760027789938546800) has status 201
+2025-10-09 09:36:32,441 - basicLogger - INFO - Received event purchase_reading with trace id 1760027792441372800
+2025-10-09 09:36:32,646 - basicLogger - INFO - Response for event search_reading (id: 1760027790072821300) has status 201
+2025-10-09 09:36:32,653 - basicLogger - INFO - Received event purchase_reading with trace id 1760027792653789200
+2025-10-09 09:36:32,855 - basicLogger - INFO - Response for event search_reading (id: 1760027790307001200) has status 201
+2025-10-09 09:36:32,861 - basicLogger - INFO - Received event purchase_reading with trace id 1760027792861297700
+2025-10-09 09:36:33,019 - basicLogger - INFO - Response for event search_reading (id: 1760027790498268600) has status 201
+2025-10-09 09:36:33,023 - basicLogger - INFO - Received event purchase_reading with trace id 1760027793023260400
+2025-10-09 09:36:33,123 - basicLogger - INFO - Response for event search_reading (id: 1760027790647288800) has status 201
+2025-10-09 09:36:33,127 - basicLogger - INFO - Received event purchase_reading with trace id 1760027793127747500
+2025-10-09 09:36:34,880 - basicLogger - INFO - Response for event purchase_reading (id: 1760027792441372800) has status 201
+2025-10-09 09:36:34,881 - basicLogger - INFO - Received event purchase_reading with trace id 1760027794880683900
+2025-10-09 09:36:35,154 - basicLogger - INFO - Response for event purchase_reading (id: 1760027792653789200) has status 201
+2025-10-09 09:36:35,154 - basicLogger - INFO - Received event purchase_reading with trace id 1760027795154635400
+2025-10-09 09:36:35,401 - basicLogger - INFO - Response for event purchase_reading (id: 1760027792861297700) has status 201
+2025-10-09 09:36:35,401 - basicLogger - INFO - Received event purchase_reading with trace id 1760027795401400300
+2025-10-09 09:36:35,540 - basicLogger - INFO - Response for event purchase_reading (id: 1760027793023260400) has status 201
+2025-10-09 09:36:35,540 - basicLogger - INFO - Received event purchase_reading with trace id 1760027795540066100
+2025-10-09 09:36:36,103 - basicLogger - INFO - Response for event purchase_reading (id: 1760027793127747500) has status 201
+2025-10-09 09:36:36,103 - basicLogger - INFO - Received event purchase_reading with trace id 1760027796103446800
+2025-10-09 09:36:37,320 - basicLogger - INFO - Response for event purchase_reading (id: 1760027794880683900) has status 201
+2025-10-09 09:36:37,325 - basicLogger - INFO - Received event search_reading with trace id 1760027797325746600
+2025-10-09 09:36:37,588 - basicLogger - INFO - Response for event purchase_reading (id: 1760027795154635400) has status 201
+2025-10-09 09:36:37,593 - basicLogger - INFO - Received event search_reading with trace id 1760027797593268700
+2025-10-09 09:36:37,901 - basicLogger - INFO - Response for event purchase_reading (id: 1760027795401400300) has status 201
+2025-10-09 09:36:37,906 - basicLogger - INFO - Received event search_reading with trace id 1760027797906416800
+2025-10-09 09:36:37,937 - basicLogger - INFO - Response for event purchase_reading (id: 1760027795540066100) has status 201
+2025-10-09 09:36:37,943 - basicLogger - INFO - Received event search_reading with trace id 1760027797942526300
+2025-10-09 09:36:38,506 - basicLogger - INFO - Response for event purchase_reading (id: 1760027796103446800) has status 201
+2025-10-09 09:36:38,512 - basicLogger - INFO - Received event search_reading with trace id 1760027798512451100
+2025-10-09 09:36:39,755 - basicLogger - INFO - Response for event search_reading (id: 1760027797325746600) has status 201
+2025-10-09 09:36:39,756 - basicLogger - INFO - Received event search_reading with trace id 1760027799756555900
+2025-10-09 09:36:40,005 - basicLogger - INFO - Response for event search_reading (id: 1760027797593268700) has status 201
+2025-10-09 09:36:40,006 - basicLogger - INFO - Received event search_reading with trace id 1760027800005953100
+2025-10-09 09:36:40,364 - basicLogger - INFO - Response for event search_reading (id: 1760027797906416800) has status 201
+2025-10-09 09:36:40,364 - basicLogger - INFO - Received event search_reading with trace id 1760027800364988600
+2025-10-09 09:36:40,416 - basicLogger - INFO - Response for event search_reading (id: 1760027797942526300) has status 201
+2025-10-09 09:36:40,416 - basicLogger - INFO - Received event search_reading with trace id 1760027800416964300
+2025-10-09 09:36:40,882 - basicLogger - INFO - Response for event search_reading (id: 1760027798512451100) has status 201
+2025-10-09 09:36:40,882 - basicLogger - INFO - Received event search_reading with trace id 1760027800882298700
+2025-10-09 09:36:42,148 - basicLogger - INFO - Response for event search_reading (id: 1760027799756555900) has status 201
+2025-10-09 09:36:42,153 - basicLogger - INFO - Received event purchase_reading with trace id 1760027802153330700
+2025-10-09 09:36:42,423 - basicLogger - INFO - Response for event search_reading (id: 1760027800005953100) has status 201
+2025-10-09 09:36:42,428 - basicLogger - INFO - Received event purchase_reading with trace id 1760027802428901200
+2025-10-09 09:36:42,898 - basicLogger - INFO - Response for event search_reading (id: 1760027800364988600) has status 201
+2025-10-09 09:36:42,903 - basicLogger - INFO - Received event purchase_reading with trace id 1760027802903665400
+2025-10-09 09:36:42,929 - basicLogger - INFO - Response for event search_reading (id: 1760027800416964300) has status 201
+2025-10-09 09:36:42,936 - basicLogger - INFO - Received event purchase_reading with trace id 1760027802936183600
+2025-10-09 09:36:43,267 - basicLogger - INFO - Response for event search_reading (id: 1760027800882298700) has status 201
+2025-10-09 09:36:43,272 - basicLogger - INFO - Received event purchase_reading with trace id 1760027803272577200
+2025-10-09 09:36:44,579 - basicLogger - INFO - Response for event purchase_reading (id: 1760027802153330700) has status 201
+2025-10-09 09:36:44,579 - basicLogger - INFO - Received event purchase_reading with trace id 1760027804579122500
+2025-10-09 09:36:44,857 - basicLogger - INFO - Response for event purchase_reading (id: 1760027802428901200) has status 201
+2025-10-09 09:36:44,857 - basicLogger - INFO - Received event purchase_reading with trace id 1760027804857022900
+2025-10-09 09:36:45,380 - basicLogger - INFO - Response for event purchase_reading (id: 1760027802903665400) has status 201
+2025-10-09 09:36:45,380 - basicLogger - INFO - Received event purchase_reading with trace id 1760027805380677300
+2025-10-09 09:36:45,421 - basicLogger - INFO - Response for event purchase_reading (id: 1760027802936183600) has status 201
+2025-10-09 09:36:45,422 - basicLogger - INFO - Received event purchase_reading with trace id 1760027805422077100
+2025-10-09 09:36:46,143 - basicLogger - INFO - Response for event purchase_reading (id: 1760027803272577200) has status 201
+2025-10-09 09:36:46,143 - basicLogger - INFO - Received event purchase_reading with trace id 1760027806143697500
+2025-10-09 09:36:47,065 - basicLogger - INFO - Response for event purchase_reading (id: 1760027804579122500) has status 201
+2025-10-09 09:36:47,071 - basicLogger - INFO - Received event search_reading with trace id 1760027807071436500
+2025-10-09 09:36:47,274 - basicLogger - INFO - Response for event purchase_reading (id: 1760027804857022900) has status 201
+2025-10-09 09:36:47,279 - basicLogger - INFO - Received event search_reading with trace id 1760027807279485600
+2025-10-09 09:36:47,914 - basicLogger - INFO - Response for event purchase_reading (id: 1760027805380677300) has status 201
+2025-10-09 09:36:47,921 - basicLogger - INFO - Received event search_reading with trace id 1760027807921934100
+2025-10-09 09:36:47,936 - basicLogger - INFO - Response for event purchase_reading (id: 1760027805422077100) has status 201
+2025-10-09 09:36:47,941 - basicLogger - INFO - Received event search_reading with trace id 1760027807941586800
+2025-10-09 09:36:48,548 - basicLogger - INFO - Response for event purchase_reading (id: 1760027806143697500) has status 201
+2025-10-09 09:36:48,552 - basicLogger - INFO - Received event search_reading with trace id 1760027808552839800
+2025-10-09 09:36:49,556 - basicLogger - INFO - Response for event search_reading (id: 1760027807071436500) has status 201
+2025-10-09 09:36:49,556 - basicLogger - INFO - Received event search_reading with trace id 1760027809556232500
+2025-10-09 09:36:49,712 - basicLogger - INFO - Response for event search_reading (id: 1760027807279485600) has status 201
+2025-10-09 09:36:49,713 - basicLogger - INFO - Received event search_reading with trace id 1760027809713294800
+2025-10-09 09:36:50,401 - basicLogger - INFO - Response for event search_reading (id: 1760027807921934100) has status 201
+2025-10-09 09:36:50,401 - basicLogger - INFO - Received event search_reading with trace id 1760027810401796800
+2025-10-09 09:36:50,406 - basicLogger - INFO - Response for event search_reading (id: 1760027807941586800) has status 201
+2025-10-09 09:36:50,406 - basicLogger - INFO - Received event search_reading with trace id 1760027810406373700
+2025-10-09 09:36:50,880 - basicLogger - INFO - Response for event search_reading (id: 1760027808552839800) has status 201
+2025-10-09 09:36:50,880 - basicLogger - INFO - Received event search_reading with trace id 1760027810880990500
+2025-10-09 09:36:52,007 - basicLogger - INFO - Response for event search_reading (id: 1760027809556232500) has status 201
+2025-10-09 09:36:52,011 - basicLogger - INFO - Received event purchase_reading with trace id 1760027812011905200
+2025-10-09 09:36:52,091 - basicLogger - INFO - Response for event search_reading (id: 1760027809713294800) has status 201
+2025-10-09 09:36:52,097 - basicLogger - INFO - Received event purchase_reading with trace id 1760027812097208600
+2025-10-09 09:36:52,930 - basicLogger - INFO - Response for event search_reading (id: 1760027810406373700) has status 201
+2025-10-09 09:36:52,936 - basicLogger - INFO - Received event purchase_reading with trace id 1760027812936873200
+2025-10-09 09:36:52,937 - basicLogger - INFO - Response for event search_reading (id: 1760027810401796800) has status 201
+2025-10-09 09:36:52,943 - basicLogger - INFO - Received event purchase_reading with trace id 1760027812943597800
+2025-10-09 09:36:53,261 - basicLogger - INFO - Response for event search_reading (id: 1760027810880990500) has status 201
+2025-10-09 09:36:53,266 - basicLogger - INFO - Received event purchase_reading with trace id 1760027813266934900
+2025-10-09 09:36:54,485 - basicLogger - INFO - Response for event purchase_reading (id: 1760027812011905200) has status 201
+2025-10-09 09:36:54,485 - basicLogger - INFO - Received event purchase_reading with trace id 1760027814485472500
+2025-10-09 09:36:54,563 - basicLogger - INFO - Response for event purchase_reading (id: 1760027812097208600) has status 201
+2025-10-09 09:36:54,564 - basicLogger - INFO - Received event purchase_reading with trace id 1760027814564359700
+2025-10-09 09:36:55,497 - basicLogger - INFO - Response for event purchase_reading (id: 1760027812943597800) has status 201
+2025-10-09 09:36:55,498 - basicLogger - INFO - Received event purchase_reading with trace id 1760027815498911300
+2025-10-09 09:36:55,504 - basicLogger - INFO - Response for event purchase_reading (id: 1760027812936873200) has status 201
+2025-10-09 09:36:55,505 - basicLogger - INFO - Received event purchase_reading with trace id 1760027815505344300
+2025-10-09 09:36:56,089 - basicLogger - INFO - Response for event purchase_reading (id: 1760027813266934900) has status 201
+2025-10-09 09:36:56,089 - basicLogger - INFO - Received event purchase_reading with trace id 1760027816089636100
+2025-10-09 09:36:57,065 - basicLogger - INFO - Response for event purchase_reading (id: 1760027814485472500) has status 201
+2025-10-09 09:36:57,072 - basicLogger - INFO - Received event search_reading with trace id 1760027817072311200
+2025-10-09 09:36:57,092 - basicLogger - INFO - Response for event purchase_reading (id: 1760027814564359700) has status 201
+2025-10-09 09:36:57,097 - basicLogger - INFO - Received event search_reading with trace id 1760027817097893100
+2025-10-09 09:36:58,015 - basicLogger - INFO - Response for event purchase_reading (id: 1760027815498911300) has status 201
+2025-10-09 09:36:58,022 - basicLogger - INFO - Received event search_reading with trace id 1760027818022452100
+2025-10-09 09:36:58,024 - basicLogger - INFO - Response for event purchase_reading (id: 1760027815505344300) has status 201
+2025-10-09 09:36:58,031 - basicLogger - INFO - Received event search_reading with trace id 1760027818031563800
+2025-10-09 09:36:58,514 - basicLogger - INFO - Response for event purchase_reading (id: 1760027816089636100) has status 201
+2025-10-09 09:36:58,521 - basicLogger - INFO - Received event search_reading with trace id 1760027818521862300
+2025-10-09 09:36:59,733 - basicLogger - INFO - Response for event search_reading (id: 1760027817097893100) has status 201
+2025-10-09 09:36:59,734 - basicLogger - INFO - Received event search_reading with trace id 1760027819734367300
+2025-10-09 09:36:59,739 - basicLogger - INFO - Response for event search_reading (id: 1760027817072311200) has status 201
+2025-10-09 09:36:59,740 - basicLogger - INFO - Received event search_reading with trace id 1760027819740440700
+2025-10-09 09:37:00,500 - basicLogger - INFO - Response for event search_reading (id: 1760027818031563800) has status 201
+2025-10-09 09:37:00,501 - basicLogger - INFO - Received event search_reading with trace id 1760027820501427700
+2025-10-09 09:37:00,513 - basicLogger - INFO - Response for event search_reading (id: 1760027818022452100) has status 201
+2025-10-09 09:37:00,513 - basicLogger - INFO - Received event search_reading with trace id 1760027820513462800
+2025-10-09 09:37:00,907 - basicLogger - INFO - Response for event search_reading (id: 1760027818521862300) has status 201
+2025-10-09 09:37:00,907 - basicLogger - INFO - Received event search_reading with trace id 1760027820907950300
+2025-10-09 09:37:02,243 - basicLogger - INFO - Response for event search_reading (id: 1760027819734367300) has status 201
+2025-10-09 09:37:02,249 - basicLogger - INFO - Received event purchase_reading with trace id 1760027822249340900
+2025-10-09 09:37:02,249 - basicLogger - INFO - Response for event search_reading (id: 1760027819740440700) has status 201
+2025-10-09 09:37:02,256 - basicLogger - INFO - Received event purchase_reading with trace id 1760027822256122900
+2025-10-09 09:37:02,977 - basicLogger - INFO - Response for event search_reading (id: 1760027820501427700) has status 201
+2025-10-09 09:37:02,981 - basicLogger - INFO - Response for event search_reading (id: 1760027820513462800) has status 201
+2025-10-09 09:37:02,984 - basicLogger - INFO - Received event purchase_reading with trace id 1760027822984108900
+2025-10-09 09:37:02,988 - basicLogger - INFO - Received event purchase_reading with trace id 1760027822988150500
+2025-10-09 09:37:03,306 - basicLogger - INFO - Response for event search_reading (id: 1760027820907950300) has status 201
+2025-10-09 09:37:03,310 - basicLogger - INFO - Received event purchase_reading with trace id 1760027823310678000
+2025-10-09 09:37:04,746 - basicLogger - INFO - Response for event purchase_reading (id: 1760027822249340900) has status 201
+2025-10-09 09:37:04,746 - basicLogger - INFO - Received event purchase_reading with trace id 1760027824746462400
+2025-10-09 09:37:04,750 - basicLogger - INFO - Response for event purchase_reading (id: 1760027822256122900) has status 201
+2025-10-09 09:37:04,750 - basicLogger - INFO - Received event purchase_reading with trace id 1760027824750199500
+2025-10-09 09:37:05,471 - basicLogger - INFO - Response for event purchase_reading (id: 1760027822984108900) has status 201
+2025-10-09 09:37:05,471 - basicLogger - INFO - Received event purchase_reading with trace id 1760027825471595500
+2025-10-09 09:37:05,475 - basicLogger - INFO - Response for event purchase_reading (id: 1760027822988150500) has status 201
+2025-10-09 09:37:05,475 - basicLogger - INFO - Received event purchase_reading with trace id 1760027825475595700
+2025-10-09 09:37:06,116 - basicLogger - INFO - Response for event purchase_reading (id: 1760027823310678000) has status 201
+2025-10-09 09:37:06,116 - basicLogger - INFO - Received event purchase_reading with trace id 1760027826116104200
+2025-10-09 09:37:07,258 - basicLogger - INFO - Response for event purchase_reading (id: 1760027824746462400) has status 201
+2025-10-09 09:37:07,264 - basicLogger - INFO - Response for event purchase_reading (id: 1760027824750199500) has status 201
+2025-10-09 09:37:07,264 - basicLogger - INFO - Received event search_reading with trace id 1760027827264450800
+2025-10-09 09:37:07,269 - basicLogger - INFO - Received event search_reading with trace id 1760027827269955500
+2025-10-09 09:37:07,960 - basicLogger - INFO - Response for event purchase_reading (id: 1760027825475595700) has status 201
+2025-10-09 09:37:07,967 - basicLogger - INFO - Received event search_reading with trace id 1760027827967582500
+2025-10-09 09:37:07,967 - basicLogger - INFO - Response for event purchase_reading (id: 1760027825471595500) has status 201
+2025-10-09 09:37:07,973 - basicLogger - INFO - Received event search_reading with trace id 1760027827973892500
+2025-10-09 09:37:08,478 - basicLogger - INFO - Response for event purchase_reading (id: 1760027826116104200) has status 201
+2025-10-09 09:37:08,496 - basicLogger - INFO - Received event search_reading with trace id 1760027828496165700
+2025-10-09 09:37:09,721 - basicLogger - INFO - Response for event search_reading (id: 1760027827269955500) has status 201
+2025-10-09 09:37:09,721 - basicLogger - INFO - Received event search_reading with trace id 1760027829721329400
+2025-10-09 09:37:09,725 - basicLogger - INFO - Response for event search_reading (id: 1760027827264450800) has status 201
+2025-10-09 09:37:09,725 - basicLogger - INFO - Received event search_reading with trace id 1760027829725843000
+2025-10-09 09:37:10,483 - basicLogger - INFO - Response for event search_reading (id: 1760027827973892500) has status 201
+2025-10-09 09:37:10,484 - basicLogger - INFO - Received event search_reading with trace id 1760027830484480300
+2025-10-09 09:37:10,490 - basicLogger - INFO - Response for event search_reading (id: 1760027827967582500) has status 201
+2025-10-09 09:37:10,491 - basicLogger - INFO - Received event search_reading with trace id 1760027830491191300
+2025-10-09 09:37:10,886 - basicLogger - INFO - Response for event search_reading (id: 1760027828496165700) has status 201
+2025-10-09 09:37:10,886 - basicLogger - INFO - Received event search_reading with trace id 1760027830886694400
+2025-10-09 09:37:12,236 - basicLogger - INFO - Response for event search_reading (id: 1760027829721329400) has status 201
+2025-10-09 09:37:12,240 - basicLogger - INFO - Response for event search_reading (id: 1760027829725843000) has status 201
+2025-10-09 09:37:12,247 - basicLogger - INFO - Received event purchase_reading with trace id 1760027832247559100
+2025-10-09 09:37:12,247 - basicLogger - INFO - Received event purchase_reading with trace id 1760027832247559100
+2025-10-09 09:37:12,980 - basicLogger - INFO - Response for event search_reading (id: 1760027830484480300) has status 201
+2025-10-09 09:37:12,985 - basicLogger - INFO - Received event purchase_reading with trace id 1760027832985752400
+2025-10-09 09:37:13,001 - basicLogger - INFO - Response for event search_reading (id: 1760027830491191300) has status 201
+2025-10-09 09:37:13,007 - basicLogger - INFO - Received event purchase_reading with trace id 1760027833007041400
+2025-10-09 09:37:13,265 - basicLogger - INFO - Response for event search_reading (id: 1760027830886694400) has status 201
+2025-10-09 09:37:13,270 - basicLogger - INFO - Received event purchase_reading with trace id 1760027833270361000
+2025-10-09 09:37:14,701 - basicLogger - INFO - Response for event purchase_reading (id: 1760027832247559100) has status 201
+2025-10-09 09:37:14,701 - basicLogger - INFO - Received event purchase_reading with trace id 1760027834701918600
+2025-10-09 09:37:14,707 - basicLogger - INFO - Response for event purchase_reading (id: 1760027832247559100) has status 201
+2025-10-09 09:37:14,707 - basicLogger - INFO - Received event purchase_reading with trace id 1760027834707382100
+2025-10-09 09:37:15,525 - basicLogger - INFO - Response for event purchase_reading (id: 1760027832985752400) has status 201
+2025-10-09 09:37:15,525 - basicLogger - INFO - Received event purchase_reading with trace id 1760027835525709800
+2025-10-09 09:37:15,545 - basicLogger - INFO - Response for event purchase_reading (id: 1760027833007041400) has status 201
+2025-10-09 09:37:15,545 - basicLogger - INFO - Received event purchase_reading with trace id 1760027835545481300
+2025-10-09 09:37:15,848 - basicLogger - INFO - Response for event purchase_reading (id: 1760027833270361000) has status 201
+2025-10-09 09:37:15,848 - basicLogger - INFO - Received event purchase_reading with trace id 1760027835848788300
+2025-10-09 09:37:17,242 - basicLogger - INFO - Response for event purchase_reading (id: 1760027834707382100) has status 201
+2025-10-09 09:37:17,247 - basicLogger - INFO - Response for event purchase_reading (id: 1760027834701918600) has status 201
+2025-10-09 09:37:18,177 - basicLogger - INFO - Response for event purchase_reading (id: 1760027835545481300) has status 201
+2025-10-09 09:37:18,185 - basicLogger - INFO - Response for event purchase_reading (id: 1760027835525709800) has status 201
+2025-10-09 09:37:18,325 - basicLogger - INFO - Response for event purchase_reading (id: 1760027835848788300) has status 201

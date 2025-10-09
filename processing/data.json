@@ -1,7 +1,7 @@
 {
-  "num_search_readings": 863,
+  "num_search_readings": 100,
   "max_search_count": 30,
-  "num_purchase_readings": 833,
+  "num_purchase_readings": 100,
   "max_purchase_count": 30,
-  "last_updated": "2025-10-09T06:46:09.043Z"
+  "last_updated": "2025-10-09T16:40:09.464"
 }

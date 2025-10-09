@@ -4,10 +4,10 @@ import yaml
 import logging
 import logging.config
 from apscheduler.schedulers.background import BackgroundScheduler
-import requests
 from datetime import datetime
 import json
 import os
+import httpx
 
 with open('app_conf.yml', 'r') as f:
     app_config = yaml.safe_load(f.read())
@@ -52,10 +52,10 @@ def populate_stats():
         }
         last_updated = stats['last_updated']
     
-    current_timestamp = datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%S.%fZ")[:-4] + 'Z'
+    current_timestamp = datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%S.%fZ")[:-3]
     
     search_url = app_config['eventstores']['search']['url']
-    search_response = requests.get(
+    search_response = httpx.get(
         search_url,
         params={'start_timestamp': last_updated, 'end_timestamp': current_timestamp}
     )
@@ -73,7 +73,7 @@ def populate_stats():
         logger.error(f"Failed to get search readings. Status: {search_response.status_code}")
     
     purchase_url = app_config['eventstores']['purchase']['url']
-    purchase_response = requests.get(
+    purchase_response = httpx.get(
         purchase_url,
         params={'start_timestamp': last_updated, 'end_timestamp': current_timestamp}
     )
