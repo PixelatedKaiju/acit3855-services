@@ -8,21 +8,21 @@ info:
 
 paths:
   /product/search:
-    post:
-      summary: Add a single search reading
-      operationId: app.add_search_readings
-      description: Stores one search reading in the database
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/SearchReading'
-      responses:
-        '201':
-          description: search reading successfully stored
-        '400':
-          description: invalid input, object invalid
+  #   post:
+  #     summary: Add a single search reading
+  #     operationId: app.add_search_readings
+  #     description: Stores one search reading in the database
+  #     requestBody:
+  #       required: true
+  #       content:
+  #         application/json:
+  #           schema:
+  #             $ref: '#/components/schemas/SearchReading'
+  #     responses:
+  #       '201':
+  #         description: search reading successfully stored
+  #       '400':
+  #         description: invalid input, object invalid
     
     get:
       summary: gets search readings in a time range
@@ -54,21 +54,21 @@ paths:
                   $ref: '#/components/schemas/SearchReading'
 
   /product/sold:
-    post:
-      summary: Add a single purchase reading
-      operationId: app.add_purchase_readings
-      description: Stores one purchase reading in the database
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PurchaseReading'
-      responses:
-        '201':
-          description: purchase reading successfully stored
-        '400':
-          description: invalid input, object invalid
+    # post:
+    #   summary: Add a single purchase reading
+    #   operationId: app.add_purchase_readings
+    #   description: Stores one purchase reading in the database
+    #   requestBody:
+    #     required: true
+    #     content:
+    #       application/json:
+    #         schema:
+    #           $ref: '#/components/schemas/PurchaseReading'
+    #   responses:
+    #     '201':
+    #       description: purchase reading successfully stored
+    #     '400':
+    #       description: invalid input, object invalid
     
     get:
       summary: gets purchase readings in a time range

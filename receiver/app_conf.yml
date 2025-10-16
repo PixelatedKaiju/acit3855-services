@@ -1,5 +1,5 @@
-version: 1
-eventstore1:
-  url: http://localhost:8090/product/search
-eventstore2:
-  url: http://localhost:8090/product/sold
+version: 1 
+events:
+  hostname: localhost
+  port: 9092
+  topic: events
