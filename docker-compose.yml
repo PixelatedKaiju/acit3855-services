@@ -71,10 +71,10 @@ services:
     build:
       context: ./storage
       dockerfile: Dockerfile
+    restart: on-failure  
     depends_on:
       db:
         condition: service_healthy
-      # --- UPDATED THIS BLOCK ---
       kafka:
         condition: service_healthy
     environment:
