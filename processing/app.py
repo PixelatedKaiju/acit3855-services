@@ -8,7 +8,8 @@ from datetime import datetime
 import json
 import os
 import httpx
-
+from connexion.middleware import MiddlewarePosition 
+from starlette.middleware.cors import CORSMiddleware
 
 with open('/config/app_conf.yml', 'r') as f:
     app_config = yaml.safe_load(f.read())
@@ -112,6 +113,15 @@ def init_scheduler():
 
 
 app = connexion.FlaskApp(__name__, specification_dir='')
+
+app.add_middleware(
+    CORSMiddleware,
+    position=MiddlewarePosition.BEFORE_EXCEPTION,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 app.add_api("/config/grocery_api.yml")
 

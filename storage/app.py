@@ -37,44 +37,6 @@ def make_session():
     return sessionmaker(bind=ENGINE)()
 
 
-# def add_search_readings(body):
-#     session = make_session()
-#     sr = SearchReading(
-#         trace_id=body["trace_id"],
-#         store_id=body["store_id"],
-#         store_name=body["store_name"],
-#         product_id=body["product_id"],
-#         search_count=body["search_count"],
-#         recorded_timestamp=body["recorded_timestamp"]
-#     )
-#     session.add(sr)
-#     session.commit()
-#     session.close()
-    
-#     logger.debug(f'Stored event search_reading with trace id {body["trace_id"]}')
-    
-#     return NoContent, 201
-
-
-# def add_purchase_readings(body):
-#     session = make_session()
-#     pr = PurchaseReading(
-#         trace_id=body["trace_id"],
-#         store_id=body["store_id"],
-#         store_name=body["store_name"],
-#         product_id=body["product_id"],
-#         purchase_count=body["purchase_count"],
-#         recorded_timestamp=body["recorded_timestamp"]
-#     )
-#     session.add(pr)
-#     session.commit()
-#     session.close()
-    
-#     logger.debug(f'Stored event purchase_reading with trace id {body["trace_id"]}')
-
-#     return NoContent, 201
-
-
 def get_search_readings(start_timestamp, end_timestamp):
     session = make_session()
 

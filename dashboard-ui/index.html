@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grocery System Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .logo {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 20px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3em;
+        }
+
+        .last-updated {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .card h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .stat-row:last-child {
+            border-bottom: none;
+        }
+
+        .stat-label {
+            font-weight: 600;
+            color: #555;
+        }
+
+        .stat-value {
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .event-card {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 10px;
+            border-left: 4px solid #667eea;
+        }
+
+        .event-detail {
+            margin: 5px 0;
+            font-size: 0.9em;
+        }
+
+        .error {
+            color: #e74c3c;
+            padding: 10px;
+            background: #fadbd8;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+
+        .loading {
+            text-align: center;
+            color: #666;
+            padding: 20px;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .updating {
+            animation: pulse 1s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">🛒</div>
+            <h1>Grocery Analytics Dashboard</h1>
+            <div class="last-updated">Last Updated: <span id="lastUpdate">Loading...</span></div>
+        </div>
+
+        <div class="dashboard-grid">
+            <!-- Processing Stats Card -->
+            <div class="card">
+                <h2>Processing Statistics</h2>
+                <div id="processingStats">
+                    <div class="loading">Loading statistics...</div>
+                </div>
+            </div>
+
+            <!-- Analyzer Stats Card -->
+            <div class="card">
+                <h2>Analyzer Statistics</h2>
+                <div id="analyzerStats">
+                    <div class="loading">Loading analyzer data...</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Event Cards -->
+        <div class="dashboard-grid">
+            <div class="card">
+                <h2>Recent Search Event</h2>
+                <div id="searchEvent">
+                    <div class="loading">Loading search event...</div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>Recent Purchase Event</h2>
+                <div id="purchaseEvent">
+                    <div class="loading">Loading purchase event...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Configuration - Update these URLs to match your Cloud VM
+        const CONFIG = {
+            processingStatsUrl: 'http://142.232.152.18:8100/stats',
+            analyzerStatsUrl: 'http://142.232.152.18:8110/stats',
+            searchEventUrl: 'http://142.232.152.18:8110/search',
+            purchaseEventUrl: 'http://142.232.152.18:8110/purchase',
+            updateInterval: 3000 // 3 seconds
+        };
+
+        // Fetch processing statistics
+        async function fetchProcessingStats() {
+            try {
+                const response = await fetch(CONFIG.processingStatsUrl);
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                
+                const data = await response.json();
+                displayProcessingStats(data);
+            } catch (error) {
+                document.getElementById('processingStats').innerHTML = 
+                    `<div class="error">Error loading processing stats: ${error.message}</div>`;
+            }
+        }
+
+        // Display processing statistics
+        function displayProcessingStats(stats) {
+            const html = `
+                <div class="stat-row">
+                    <span class="stat-label">Total Search Readings:</span>
+                    <span class="stat-value">${stats.num_search_readings || 0}</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">Max Search Count:</span>
+                    <span class="stat-value">${stats.max_search_count || 0}</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">Total Purchase Readings:</span>
+                    <span class="stat-value">${stats.num_purchase_readings || 0}</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">Max Purchase Count:</span>
+                    <span class="stat-value">${stats.max_purchase_count || 0}</span>
+                </div>
+            `;
+            document.getElementById('processingStats').innerHTML = html;
+            
+            // Update last updated time
+            if (stats.last_updated) {
+                document.getElementById('lastUpdate').textContent = 
+                    new Date(stats.last_updated).toLocaleString();
+            }
+        }
+
+        // Fetch analyzer statistics
+        async function fetchAnalyzerStats() {
+            try {
+                const response = await fetch(CONFIG.analyzerStatsUrl);
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                
+                const data = await response.json();
+                displayAnalyzerStats(data);
+            } catch (error) {
+                document.getElementById('analyzerStats').innerHTML = 
+                    `<div class="error">Error loading analyzer stats: ${error.message}</div>`;
+            }
+        }
+
+        // Display analyzer statistics
+        function displayAnalyzerStats(stats) {
+            const html = `
+                <div class="stat-row">
+                    <span class="stat-label">Total Search Events:</span>
+                    <span class="stat-value">${stats.num_search_readings || 0}</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">Total Purchase Events:</span>
+                    <span class="stat-value">${stats.num_purchase_readings || 0}</span>
+                </div>
+            `;
+            document.getElementById('analyzerStats').innerHTML = html;
+        }
+
+        // Fetch a random search event
+        async function fetchSearchEvent() {
+            try {
+                // Get stats first to know the range
+                const statsResponse = await fetch(CONFIG.analyzerStatsUrl);
+                const stats = await statsResponse.json();
+                
+                if (stats.num_search_readings === 0) {
+                    document.getElementById('searchEvent').innerHTML = 
+                        '<div class="event-card">No search events available yet</div>';
+                    return;
+                }
+                
+                // Get a random index
+                const randomIndex = Math.floor(Math.random() * stats.num_search_readings);
+                const response = await fetch(`${CONFIG.searchEventUrl}?index=${randomIndex}`);
+                
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                
+                const event = await response.json();
+                displaySearchEvent(event);
+            } catch (error) {
+                document.getElementById('searchEvent').innerHTML = 
+                    `<div class="error">Error loading search event: ${error.message}</div>`;
+            }
+        }
+
+        // Display search event
+        function displaySearchEvent(event) {
+            const html = `
+                <div class="event-card">
+                    <div class="event-detail"><strong>Trace ID:</strong> ${event.trace_id || 'N/A'}</div>
+                    <div class="event-detail"><strong>Store:</strong> ${event.store_name || 'N/A'} (ID: ${event.store_id || 'N/A'})</div>
+                    <div class="event-detail"><strong>Product ID:</strong> ${event.product_id || 'N/A'}</div>
+                    <div class="event-detail"><strong>Search Count:</strong> ${event.search_count || 0}</div>
+                    <div class="event-detail"><strong>Recorded:</strong> ${event.recorded_timestamp || 'N/A'}</div>
+                </div>
+            `;
+            document.getElementById('searchEvent').innerHTML = html;
+        }
+
+        // Fetch a random purchase event
+        async function fetchPurchaseEvent() {
+            try {
+                // Get stats first to know the range
+                const statsResponse = await fetch(CONFIG.analyzerStatsUrl);
+                const stats = await statsResponse.json();
+                
+                if (stats.num_purchase_readings === 0) {
+                    document.getElementById('purchaseEvent').innerHTML = 
+                        '<div class="event-card">No purchase events available yet</div>';
+                    return;
+                }
+                
+                // Get a random index
+                const randomIndex = Math.floor(Math.random() * stats.num_purchase_readings);
+                const response = await fetch(`${CONFIG.purchaseEventUrl}?index=${randomIndex}`);
+                
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                
+                const event = await response.json();
+                displayPurchaseEvent(event);
+            } catch (error) {
+                document.getElementById('purchaseEvent').innerHTML = 
+                    `<div class="error">Error loading purchase event: ${error.message}</div>`;
+            }
+        }
+
+        // Display purchase event
+        function displayPurchaseEvent(event) {
+            const html = `
+                <div class="event-card">
+                    <div class="event-detail"><strong>Trace ID:</strong> ${event.trace_id || 'N/A'}</div>
+                    <div class="event-detail"><strong>Store:</strong> ${event.store_name || 'N/A'} (ID: ${event.store_id || 'N/A'})</div>
+                    <div class="event-detail"><strong>Product ID:</strong> ${event.product_id || 'N/A'}</div>
+                    <div class="event-detail"><strong>Purchase Count:</strong> ${event.purchase_count || 0}</div>
+                    <div class="event-detail"><strong>Recorded:</strong> ${event.recorded_timestamp || 'N/A'}</div>
+                </div>
+            `;
+            document.getElementById('purchaseEvent').innerHTML = html;
+        }
+
+        // Update all data
+        function updateDashboard() {
+            document.querySelectorAll('.card').forEach(card => {
+                card.classList.add('updating');
+            });
+            
+            fetchProcessingStats();
+            fetchAnalyzerStats();
+            fetchSearchEvent();
+            fetchPurchaseEvent();
+            
+            setTimeout(() => {
+                document.querySelectorAll('.card').forEach(card => {
+                    card.classList.remove('updating');
+                });
+            }, 300);
+        }
+
+        // Initial load
+        updateDashboard();
+
+        // Set up periodic updates
+        setInterval(updateDashboard, CONFIG.updateInterval);
+    </script>
+</body>
+</html>
