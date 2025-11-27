@@ -119,13 +119,14 @@ services:
       - ./config/analyzer/log_conf.yml:/config/log_conf.yml
       - ./config/analyzer/grocery_api.yml:/config/grocery_api.yml
       - ./logs:/logs
-    dashboard:
-      build: ./dashboard-ui
-      ports:
-        - "8888:80"
-      depends_on:
-        - processing
-        - analyzer
+      
+  dashboard:
+    build: ./dashboard-ui
+    ports:
+      - "8888:80"
+    depends_on:
+      - processing
+      - analyzer
 
 volumes:
   zookeeper-data:
