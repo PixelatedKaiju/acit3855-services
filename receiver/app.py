@@ -6,7 +6,9 @@ import yaml
 import logging
 import logging.config
 from pykafka import KafkaClient
+from pykafka.exceptions import KafkaException  
 import json
+import random  
 
 
 with open('/config/app_conf.yml', 'r') as f:
@@ -35,14 +37,9 @@ class KafkaWrapper:
             if self.make_client():
                 if self.make_consumer():
                     break
-            # Sleeps for a random amount of time (0.5 to 1.5s)
             time.sleep(random.randint(500, 1500) / 1000)
 
     def make_client(self):
-        """
-        Runs once, makes a client and sets it on the instance.
-        Returns: True (success), False (failure)
-        """
         if self.client is not None:
             return True
 
@@ -58,14 +55,11 @@ class KafkaWrapper:
             return False
 
     def make_producer(self):
-        """
-        Creates a Kafka producer and returns it.
-        """
         if self.client is None:
             self.make_client()
 
         try:
-            topic = self.client.topics[self.topic]
+            topic = self.client.topics[self.topic.encode('utf-8')] 
             producer = topic.get_sync_producer()
             logger.info("Kafka producer created!")
             return producer
@@ -74,7 +68,6 @@ class KafkaWrapper:
             return None
 
     def messages(self):
-        """Generator method that catches exceptions in the consumer loop"""
         if self.consumer is None:
             self.connect()
 
@@ -90,9 +83,18 @@ class KafkaWrapper:
                 self.consumer = None
                 self.connect()
 
+
+
+kafka_wrapper = KafkaWrapper(
+    app_config["events"]["hostname"],
+    app_config["events"]["topic"]
+)
+producer = kafka_wrapper.make_producer()
+
+
+
 def report_search_readings(body):
     search_report = body["search_readings"]
-
 
     for search in search_report:
         trace_id = time.time_ns()
@@ -118,11 +120,6 @@ def report_search_readings(body):
         msg_str = json.dumps(msg)
         producer.produce(msg_str.encode('utf-8'))
 
-
-        # url = app_config['eventstore1']['url']
-        # response = httpx.post(url, json=data)
-        
-        logger.info(f'Received event search_readings with trace id {trace_id}')
         logger.info(f'Produced message to Kafka topic events')
         
     return NoContent, 201
@@ -130,6 +127,7 @@ def report_search_readings(body):
 
 def report_sold_readings(body):
     purchase_report = body["purchase_readings"]
+
     for purchase in purchase_report:
         trace_id = time.time_ns()
         
@@ -154,10 +152,6 @@ def report_sold_readings(body):
         msg_str = json.dumps(msg)
         producer.produce(msg_str.encode('utf-8'))
         
-        # url = app_config['eventstore2']['url']
-        # response = httpx.post(url, json=data)
-        
-        logger.info(f'Received event purchase_readings with trace id {trace_id}')
         logger.info(f'Produced message to Kafka topic events')
         
     return NoContent, 201
