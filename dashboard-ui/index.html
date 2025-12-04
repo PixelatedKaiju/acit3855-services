@@ -1,154 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grocery System Dashboard</title>
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .header { text-align: center; color: white; margin-bottom: 30px; }
+        .header h1 { font-size: 2.5em; margin-bottom: 10px; }
+        .logo {
+            width: 100px; height: 100px; margin: 0 auto 20px;
+            background: white; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 3em;
+        }
+        .dashboard-grid {
+            display: grid; gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            margin-bottom: 20px;
+        }
+        .card {
+            background: white; padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .card h2 {
+            color: #667eea; margin-bottom: 15px;
+            border-bottom: 2px solid #667eea; padding-bottom: 10px;
+        }
+        .stat-row {
+            display: flex; justify-content: space-between;
+            padding: 10px 0; border-bottom: 1px solid #eee;
+        }
+        .event-card {
+            background: #f8f9fa; padding: 15px; border-radius: 8px;
+            border-left: 4px solid #667eea; margin-top: 10px;
+        }
+        .event-detail { margin: 5px 0; font-size: 0.9em; }
+        .error {
+            background: #fadbd8; color: #e74c3c;
+            padding: 10px; border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+
+        <div class="header">
+            <div class="logo">🛒</div>
+            <h1>Grocery Analytics Dashboard</h1>
+            <div>Last Updated: <span id="lastUpdate">Loading...</span></div>
+        </div>
+
+        <div class="dashboard-grid">
+            <div class="card">
+                <h2>Processing Statistics</h2>
+                <div id="processingStats">Loading…</div>
+            </div>
+
+            <div class="card">
+                <h2>Analyzer Statistics</h2>
+                <div id="analyzerStats">Loading…</div>
+            </div>
+        </div>
+
+        <div class="dashboard-grid">
+            <div class="card">
+                <h2>Recent Search Event</h2>
+                <div id="searchEvent">Loading…</div>
+            </div>
+
+            <div class="card">
+                <h2>Recent Purchase Event</h2>
+                <div id="purchaseEvent">Loading…</div>
+            </div>
+        </div>
+    </div>
+
 <script>
-    // Configuration - Update these URLs to match your Cloud VM
+    // Configuration
     const CONFIG = {
         processingStatsUrl: 'http://135.237.187.62:8100/stats',
         analyzerStatsUrl: 'http://135.237.187.62:8110/stats',
         searchEventUrl: 'http://135.237.187.62:8110/search',
         purchaseEventUrl: 'http://135.237.187.62:8110/purchase',
-        updateInterval: 3000 // 3 seconds
+        updateInterval: 3000
     };
 
-    // Fetch processing statistics
     async function fetchProcessingStats() {
         try {
-            const response = await fetch(CONFIG.processingStatsUrl);
-            if (!response.ok) throw new Error(`HTTP ${response.status}`);
-            
-            const data = await response.json();
-            displayProcessingStats(data);
-        } catch (error) {
-            document.getElementById('processingStats').innerHTML = 
-                `<div class="error">Error loading processing stats: ${error.message}</div>`;
+            const res = await fetch(CONFIG.processingStatsUrl);
+            const data = await res.json();
+            document.getElementById('processingStats').innerHTML = `
+                <div class="stat-row"><b>Total Search Readings:</b><span>${data.num_search_readings}</span></div>
+                <div class="stat-row"><b>Max Search Count:</b><span>${data.max_search_count}</span></div>
+                <div class="stat-row"><b>Total Purchase Readings:</b><span>${data.num_purchase_readings}</span></div>
+                <div class="stat-row"><b>Max Purchase Count:</b><span>${data.max_purchase_count}</span></div>
+            `;
+            document.getElementById('lastUpdate').innerText =
+                new Date(data.last_updated).toLocaleString();
+        } catch {
+            document.getElementById('processingStats').innerHTML = `<div class="error">Unable to load stats</div>`;
         }
     }
 
-    function displayProcessingStats(stats) {
-        const html = `
-            <div class="stat-row">
-                <span class="stat-label">Total Search Readings:</span>
-                <span class="stat-value">${stats.num_search_readings || 0}</span>
-            </div>
-            <div class="stat-row">
-                <span class="stat-label">Max Search Count:</span>
-                <span class="stat-value">${stats.max_search_count || 0}</span>
-            </div>
-            <div class="stat-row">
-                <span class="stat-label">Total Purchase Readings:</span>
-                <span class="stat-value">${stats.num_purchase_readings || 0}</span>
-            </div>
-            <div class="stat-row">
-                <span class="stat-label">Max Purchase Count:</span>
-                <span class="stat-value">${stats.max_purchase_count || 0}</span>
-            </div>
-        `;
-        document.getElementById('processingStats').innerHTML = html;
-
-        if (stats.last_updated) {
-            document.getElementById('lastUpdate').textContent = 
-                new Date(stats.last_updated).toLocaleString();
-        }
-    }
-
-    // Fetch analyzer statistics
     async function fetchAnalyzerStats() {
         try {
-            const response = await fetch(CONFIG.analyzerStatsUrl);
-            if (!response.ok) throw new Error(`HTTP ${response.status}`);
-            
-            const data = await response.json();
-            displayAnalyzerStats(data);
-        } catch (error) {
-            document.getElementById('analyzerStats').innerHTML = 
-                `<div class="error">Error loading analyzer stats: ${error.message}</div>`;
+            const res = await fetch(CONFIG.analyzerStatsUrl);
+            const data = await res.json();
+            document.getElementById('analyzerStats').innerHTML = `
+                <div class="stat-row"><b>Total Search Events:</b><span>${data.num_search_readings}</span></div>
+                <div class="stat-row"><b>Total Purchase Events:</b><span>${data.num_purchase_readings}</span></div>
+            `;
+        } catch {
+            document.getElementById('analyzerStats').innerHTML = `<div class="error">Unable to load analyzer stats</div>`;
         }
     }
 
-    function displayAnalyzerStats(stats) {
-        const html = `
-            <div class="stat-row">
-                <span class="stat-label">Total Search Events:</span>
-                <span class="stat-value">${stats.num_search_readings || 0}</span>
-            </div>
-            <div class="stat-row">
-                <span class="stat-label">Total Purchase Events:</span>
-                <span class="stat-value">${stats.num_purchase_readings || 0}</span>
-            </div>
-        `;
-        document.getElementById('analyzerStats').innerHTML = html;
-    }
-
-    // Fetch a random search event
     async function fetchSearchEvent() {
         try {
-            const statsResponse = await fetch(CONFIG.analyzerStatsUrl);
-            const stats = await statsResponse.json();
-            
-            if (stats.num_search_readings === 0) {
-                document.getElementById('searchEvent').innerHTML = 
-                    '<div class="event-card">No search events available yet</div>';
-                return;
-            }
-            
-            const randomIndex = Math.floor(Math.random() * stats.num_search_readings);
-            const response = await fetch(`${CONFIG.searchEventUrl}/${randomIndex}`);
-            if (!response.ok) throw new Error(`HTTP ${response.status}`);
-            
-            const event = await response.json();
-            displaySearchEvent(event);
-        } catch (error) {
-            document.getElementById('searchEvent').innerHTML = 
-                `<div class="error">Error loading search event: ${error.message}</div>`;
+            const stats = await (await fetch(CONFIG.analyzerStatsUrl)).json();
+            if (stats.num_search_readings === 0)
+                return document.getElementById('searchEvent').innerHTML =
+                    `<div>No search events yet</div>`;
+            const i = Math.floor(Math.random() * stats.num_search_readings);
+            const event = await (await fetch(`${CONFIG.searchEventUrl}/${i}`)).json();
+            document.getElementById('searchEvent').innerHTML = `
+                <div class="event-card">
+                    <div class="event-detail"><b>Trace ID:</b> ${event.trace_id}</div>
+                    <div class="event-detail"><b>Store:</b> ${event.store_name}</div>
+                    <div class="event-detail"><b>Product ID:</b> ${event.product_id}</div>
+                    <div class="event-detail"><b>Search Count:</b> ${event.search_count}</div>
+                </div>`;
+        } catch {
+            document.getElementById('searchEvent').innerHTML = `<div class="error">Unable to load search event</div>`;
         }
     }
 
-    function displaySearchEvent(event) {
-        const html = `
-            <div class="event-card">
-                <div class="event-detail"><strong>Trace ID:</strong> ${event.trace_id}</div>
-                <div class="event-detail"><strong>Store:</strong> ${event.store_name} (ID: ${event.store_id})</div>
-                <div class="event-detail"><strong>Product ID:</strong> ${event.product_id}</div>
-                <div class="event-detail"><strong>Search Count:</strong> ${event.search_count}</div>
-                <div class="event-detail"><strong>Recorded:</strong> ${event.recorded_timestamp}</div>
-            </div>
-        `;
-        document.getElementById('searchEvent').innerHTML = html;
-    }
-
-    // Fetch a random purchase event
     async function fetchPurchaseEvent() {
         try {
-            const statsResponse = await fetch(CONFIG.analyzerStatsUrl);
-            const stats = await statsResponse.json();
-            
-            if (stats.num_purchase_readings === 0) {
-                document.getElementById('purchaseEvent').innerHTML = 
-                    '<div class="event-card">No purchase events available yet</div>';
-                return;
-            }
-            
-            const randomIndex = Math.floor(Math.random() * stats.num_purchase_readings);
-            const response = await fetch(`${CONFIG.purchaseEventUrl}/${randomIndex}`);
-            if (!response.ok) throw new Error(`HTTP ${response.status}`);
-            
-            const event = await response.json();
-            displayPurchaseEvent(event);
-        } catch (error) {
-            document.getElementById('purchaseEvent').innerHTML = 
-                `<div class="error">Error loading purchase event: ${error.message}</div>`;
+            const stats = await (await fetch(CONFIG.analyzerStatsUrl)).json();
+            if (stats.num_purchase_readings === 0)
+                return document.getElementById('purchaseEvent').innerHTML =
+                    `<div>No purchase events yet</div>`;
+            const i = Math.floor(Math.random() * stats.num_purchase_readings);
+            const event = await (await fetch(`${CONFIG.purchaseEventUrl}/${i}`)).json();
+            document.getElementById('purchaseEvent').innerHTML = `
+                <div class="event-card">
+                    <div class="event-detail"><b>Trace ID:</b> ${event.trace_id}</div>
+                    <div class="event-detail"><b>Store:</b> ${event.store_name}</div>
+                    <div class="event-detail"><b>Product ID:</b> ${event.product_id}</div>
+                    <div class="event-detail"><b>Purchase Count:</b> ${event.purchase_count}</div>
+                </div>`;
+        } catch {
+            document.getElementById('purchaseEvent').innerHTML = `<div class="error">Unable to load purchase event</div>`;
         }
-    }
-
-    function displayPurchaseEvent(event) {
-        const html = `
-            <div class="event-card">
-                <div class="event-detail"><strong>Trace ID:</strong> ${event.trace_id}</div>
-                <div class="event-detail"><strong>Store:</strong> ${event.store_name} (ID: ${event.store_id})</div>
-                <div class="event-detail"><strong>Product ID:</strong> ${event.product_id}</div>
-                <div class="event-detail"><strong>Purchase Count:</strong> ${event.purchase_count}</div>
-                <div class="event-detail"><strong>Recorded:</strong> ${event.recorded_timestamp}</div>
-            </div>
-        `;
-        document.getElementById('purchaseEvent').innerHTML = html;
     }
 
     function updateDashboard() {
@@ -161,3 +176,6 @@
     updateDashboard();
     setInterval(updateDashboard, CONFIG.updateInterval);
 </script>
+
+</body>
+</html>
