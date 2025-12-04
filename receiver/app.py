@@ -54,6 +54,21 @@ class KafkaWrapper:
             self.consumer = None
             return False
 
+    def make_consumer(self):
+        """Create Kafka consumer if possible"""
+        try:
+            topic = self.client.topics[self.topic.encode('utf-8')]
+            self.consumer = topic.get_simple_consumer(
+                reset_offset_on_start=False,
+                auto_offset_reset=1  # LATEST
+            )
+            logger.info("Kafka consumer created!")
+            return True
+        except Exception as e:
+            logger.warning(f"Kafka consumer error: {e}")
+            self.consumer = None
+            return False
+
     def make_producer(self):
         if self.client is None:
             self.make_client()
