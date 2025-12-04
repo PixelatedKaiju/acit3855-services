@@ -51,7 +51,7 @@ def populate_stats():
             'max_search_count': 0,
             'num_purchase_readings': 0,
             'max_purchase_count': 0,
-            'last_updated': '2000-01-01T00:00:00.000Z'
+            'last_updated': datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%S.%fZ")[:-3]
         }
         last_updated = stats['last_updated']
     
