@@ -17,7 +17,7 @@ logging.config.dictConfig(log_config)
 logger = logging.getLogger("basicLogger")
 
 
-def get_stats():
+def get_reading_stats():
     """
     Returns overall statistics: total number of
     search and purchase readings.
@@ -59,7 +59,7 @@ def get_stats():
     return stats, 200
 
 
-def get_recent_search(index):
+def get_search_readings(index):
     """
     Returns a search reading by reverse index:
     index=0 → most recent
@@ -96,7 +96,7 @@ def get_recent_search(index):
     return result, 200
 
 
-def get_recent_purchase(index):
+def get_purchase_readings(index):
     """
     Returns a purchase reading by reverse index:
     index=0 → most recent
