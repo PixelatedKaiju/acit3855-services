@@ -87,12 +87,12 @@
     </div>
 
 <script>
-    // Configuration
+    // Correct API paths based on your grocery_api.yml
     const CONFIG = {
         processingStatsUrl: 'http://135.237.187.62:8100/stats',
         analyzerStatsUrl: 'http://135.237.187.62:8110/stats',
-        searchEventUrl: 'http://135.237.187.62:8110/search',
-        purchaseEventUrl: 'http://135.237.187.62:8110/purchase',
+        searchEventUrl: 'http://135.237.187.62:8110/product/search?index=',
+        purchaseEventUrl: 'http://135.237.187.62:8110/product/sold?index=',
         updateInterval: 3000
     };
 
@@ -106,10 +106,13 @@
                 <div class="stat-row"><b>Total Purchase Readings:</b><span>${data.num_purchase_readings}</span></div>
                 <div class="stat-row"><b>Max Purchase Count:</b><span>${data.max_purchase_count}</span></div>
             `;
-            document.getElementById('lastUpdate').innerText =
-                new Date(data.last_updated).toLocaleString();
+            if (data.last_updated) {
+                document.getElementById('lastUpdate').innerText =
+                    new Date(data.last_updated).toLocaleString();
+            }
         } catch {
-            document.getElementById('processingStats').innerHTML = `<div class="error">Unable to load stats</div>`;
+            document.getElementById('processingStats').innerHTML =
+                `<div class="error">Unable to load stats</div>`;
         }
     }
 
@@ -122,7 +125,8 @@
                 <div class="stat-row"><b>Total Purchase Events:</b><span>${data.num_purchase_readings}</span></div>
             `;
         } catch {
-            document.getElementById('analyzerStats').innerHTML = `<div class="error">Unable to load analyzer stats</div>`;
+            document.getElementById('analyzerStats').innerHTML =
+                `<div class="error">Unable to load analyzer stats</div>`;
         }
     }
 
@@ -132,8 +136,13 @@
             if (stats.num_search_readings === 0)
                 return document.getElementById('searchEvent').innerHTML =
                     `<div>No search events yet</div>`;
-            const i = Math.floor(Math.random() * stats.num_search_readings);
-            const event = await (await fetch(`${CONFIG.searchEventUrl}/${i}`)).json();
+
+            const index = Math.floor(Math.random() * stats.num_search_readings);
+            const event = await (await fetch(CONFIG.searchEventUrl + index)).json();
+            if (event.message)
+                return document.getElementById('searchEvent').innerHTML =
+                    `<div class="error">${event.message}</div>`;
+
             document.getElementById('searchEvent').innerHTML = `
                 <div class="event-card">
                     <div class="event-detail"><b>Trace ID:</b> ${event.trace_id}</div>
@@ -142,7 +151,8 @@
                     <div class="event-detail"><b>Search Count:</b> ${event.search_count}</div>
                 </div>`;
         } catch {
-            document.getElementById('searchEvent').innerHTML = `<div class="error">Unable to load search event</div>`;
+            document.getElementById('searchEvent').innerHTML =
+                `<div class="error">Unable to load search event</div>`;
         }
     }
 
@@ -152,8 +162,13 @@
             if (stats.num_purchase_readings === 0)
                 return document.getElementById('purchaseEvent').innerHTML =
                     `<div>No purchase events yet</div>`;
-            const i = Math.floor(Math.random() * stats.num_purchase_readings);
-            const event = await (await fetch(`${CONFIG.purchaseEventUrl}/${i}`)).json();
+
+            const index = Math.floor(Math.random() * stats.num_purchase_readings);
+            const event = await (await fetch(CONFIG.purchaseEventUrl + index)).json();
+            if (event.message)
+                return document.getElementById('purchaseEvent').innerHTML =
+                    `<div class="error">${event.message}</div>`;
+
             document.getElementById('purchaseEvent').innerHTML = `
                 <div class="event-card">
                     <div class="event-detail"><b>Trace ID:</b> ${event.trace_id}</div>
@@ -162,7 +177,8 @@
                     <div class="event-detail"><b>Purchase Count:</b> ${event.purchase_count}</div>
                 </div>`;
         } catch {
-            document.getElementById('purchaseEvent').innerHTML = `<div class="error">Unable to load purchase event</div>`;
+            document.getElementById('purchaseEvent').innerHTML =
+                `<div class="error">Unable to load purchase event</div>`;
         }
     }
 
