@@ -6,6 +6,7 @@ from pykafka import KafkaClient
 import json
 from connexion.middleware import MiddlewarePosition 
 from starlette.middleware.cors import CORSMiddleware
+import time 
 
 
 with open('/config/app_conf.yml', 'r') as f:
@@ -18,14 +19,35 @@ logging.config.dictConfig(log_config)
 
 logger = logging.getLogger('basicLogger')
 
+def get_kafka_client():
+    """Initializes Kafka Client with Retry Logic"""
+    current_retry = 0
+    max_retries = 10
+    hostname = f"{app_config['events']['hostname']}:{app_config['events']['port']}"
+    
+    while current_retry < max_retries:
+        try:
+            logger.info(f"Trying to connect to Kafka... (Attempt {current_retry + 1})")
+            client = KafkaClient(hosts=hostname)
+            topic = client.topics[str.encode(app_config['events']['topic'])]
+            logger.info("Successfully connected to Kafka!")
+            return client, topic
+        except Exception as e:
+            logger.error(f"Connection failed: {e}")
+            time.sleep(2) # Wait before retrying
+            current_retry += 1
+            
+    logger.error("Could not connect to Kafka after max retries.")
+    return None, None
+
+t_client, t_topic = get_kafka_client()
 
 def get_search_readings(index):
     """Get a search reading at a specific index"""
-    hostname = f"{app_config['events']['hostname']}:{app_config['events']['port']}"
-    client = KafkaClient(hosts=hostname)
-    topic = client.topics[str.encode(app_config['events']['topic'])]
-    
-    consumer = topic.get_simple_consumer(
+    if t_topic is None:
+        return {"message": "Kafka connection unavailable"}, 500
+
+    consumer = t_topic.get_simple_consumer(
         reset_offset_on_start=True,
         consumer_timeout_ms=1000
     )
@@ -88,11 +110,10 @@ def get_purchase_readings(index):
 
 
 def get_reading_stats():
-    hostname = f"{app_config['events']['hostname']}:{app_config['events']['port']}"
-    client = KafkaClient(hosts=hostname)
-    topic = client.topics[str.encode(app_config['events']['topic'])]
-    
-    consumer = topic.get_simple_consumer(
+    if t_topic is None:
+        return {"message": "Kafka connection unavailable"}, 500
+
+    consumer = t_topic.get_simple_consumer(
         reset_offset_on_start=True,
         consumer_timeout_ms=1000
     )
