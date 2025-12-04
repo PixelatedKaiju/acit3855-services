@@ -6,6 +6,14 @@ services:
       - "2181:2181"
     volumes:
       - zookeeper-data:/opt/zookeeper/data
+    restart: always
+    healthcheck:
+      test: ["CMD", "nc", "-z", "localhost", "2181"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+
 
   kafka:
     image: wurstmeister/kafka
@@ -22,17 +30,16 @@ services:
       - ./data/kafka:/kafka
     depends_on:
       - zookeeper
-    # --- ADDED THIS BLOCK ---
     healthcheck:
       test: ["CMD", "nc", "-z", "localhost", "9092"]
       interval: 10s
       timeout: 5s
       retries: 5
       start_period: 10s
+    restart: always 
 
   db:
     image: mysql:8.0
-    restart: always
     environment:
       MYSQL_RANDOM_ROOT_PASSWORD: 1
       MYSQL_DATABASE: grocery
@@ -42,12 +49,12 @@ services:
       - "3307:3306"
     volumes:
       - mysql-data:/var/lib/mysql
-    # Added healthcheck for DB (Good practice for storage service)
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       interval: 10s
       timeout: 5s
       retries: 5
+    restart: always
 
   receiver:
     build:
@@ -55,6 +62,8 @@ services:
       dockerfile: Dockerfile
     depends_on:
       kafka:
+        condition: service_healthy
+      db:
         condition: service_healthy
     environment:
       - TARGET_ENV=test
@@ -65,12 +74,12 @@ services:
       - ./config/receiver/log_conf.yml:/config/log_conf.yml
       - ./config/receiver/grocery_api.yml:/config/grocery_api.yml
       - ./logs:/logs
+    restart: always
 
   storage:
     build:
       context: ./storage
       dockerfile: Dockerfile
-    restart: on-failure  
     depends_on:
       db:
         condition: service_healthy
@@ -85,13 +94,17 @@ services:
       - ./config/storage/log_conf.yml:/config/log_conf.yml
       - ./config/storage/grocery_api.yml:/config/grocery_api.yml
       - ./logs:/logs
+    restart: always
 
   processing:
     build:
       context: ./processing
       dockerfile: Dockerfile
     depends_on:
-      - storage
+      kafka:
+        condition: service_healthy
+      db:
+        condition: service_healthy
     environment:
       - TARGET_ENV=test
     ports:
@@ -102,6 +115,7 @@ services:
       - ./config/processing/grocery_api.yml:/config/grocery_api.yml
       - ./logs:/logs
       - ./data/processing:/data
+    restart: always
 
   analyzer:
     build:
@@ -109,6 +123,8 @@ services:
       dockerfile: Dockerfile
     depends_on:
       kafka:
+        condition: service_healthy
+      db:
         condition: service_healthy
     environment:
       - TARGET_ENV=test
@@ -120,6 +136,7 @@ services:
       - ./config/analyzer/grocery_api.yml:/config/grocery_api.yml
       - ./logs:/logs
       - ./data/analyzer:/data
+    restart: always
       
   dashboard:
     build: ./dashboard-ui
@@ -128,6 +145,7 @@ services:
     depends_on:
       - processing
       - analyzer
+    restart: always
 
 volumes:
   zookeeper-data:

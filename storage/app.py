@@ -11,6 +11,10 @@ from pykafka import KafkaClient
 from pykafka.common import OffsetType
 from threading import Thread
 import json
+import time
+import random
+from pykafka.exceptions import KafkaException
+import logging
 
 with open('/config/app_conf.yml', 'r') as f:
     app_config = yaml.safe_load(f.read())
@@ -30,11 +34,94 @@ port = db_conf['port']
 db = db_conf['db']
 
 ENGINE = create_engine(
-    f'mysql+pymysql://{user}:{password}@{hostname}:{port}/{db}'
+    f"mysql+pymysql://{user}:{password}@{hostname}:{port}/{db}",
+    pool_size=5,
+    pool_recycle=280,
+    pool_pre_ping=True
 )
 
 def make_session():
     return sessionmaker(bind=ENGINE)()
+
+
+class KafkaWrapper:
+    def __init__(self, hostname, topic):
+        self.hostname = hostname
+        self.topic = topic
+        self.client = None
+        self.consumer = None
+        self.connect()
+
+    def connect(self):
+        """Infinite loop: will keep trying"""
+        while True:
+            logger.debug("Trying to connect to Kafka...")
+            if self.make_client():
+                if self.make_consumer():
+                    break
+            # Sleeps for a random amount of time (0.5 to 1.5s)
+            time.sleep(random.randint(500, 1500) / 1000)
+
+    def make_client(self):
+        """
+        Runs once, makes a client and sets it on the instance.
+        Returns: True (success), False (failure)
+        """
+        if self.client is not None:
+            return True
+
+        try:
+            self.client = KafkaClient(hosts=self.hostname)
+            logger.info("Kafka client created!")
+            return True
+        except KafkaException as e:
+            msg = f"Kafka error when making client: {e}"
+            logger.warning(msg)
+            self.client = None
+            self.consumer = None
+            return False
+
+    def make_consumer(self):
+        """
+        Runs once, makes a consumer and sets it on the instance.
+        Returns: True (success), False (failure)
+        """
+        if self.consumer is not None:
+            return True
+
+        if self.client is None:
+            return False
+
+        try:
+            topic = self.client.topics[self.topic]
+            self.consumer = topic.get_simple_consumer(
+                reset_offset_on_start=False,
+                auto_offset_reset=OffsetType.LATEST
+            )
+            return True
+        except KafkaException as e:
+            msg = f"Make error when making consumer: {e}"
+            logger.warning(msg)
+            self.client = None
+            self.consumer = None
+            return False
+
+    def messages(self):
+        """Generator method that catches exceptions in the consumer loop"""
+        if self.consumer is None:
+            self.connect()
+
+        while True:
+            try:
+                for msg in self.consumer:
+                    yield msg
+
+            except KafkaException as e:
+                msg = f"Kafka issue in consumer: {e}"
+                logger.warning(msg)
+                self.client = None
+                self.consumer = None
+                self.connect()
 
 
 def get_search_readings(start_timestamp, end_timestamp):
@@ -74,23 +161,16 @@ def get_purchase_readings(start_timestamp, end_timestamp):
     return results, 200
 
 
+
+
 def process_messages():
-    """ Process event messages """
-    hostname = f"{app_config['events']['hostname']}:{app_config['events']['port']}"    
-    logger.info(f"this is the host: {hostname}")
-    client = KafkaClient(hosts=hostname)
-    topic = client.topics[str.encode("events")]
-    # Create a consume on a consumer group, that only reads new messages
-    # (uncommitted messages) when the service re-starts (i.e., it doesn't
-    # read all the old messages from the history in the message queue).
+    hostname = f"{app_config['events']['hostname']}:{app_config['events']['port']}"
+    kafka_wrapper = KafkaWrapper(hostname, b"events")
 
-    consumer = topic.get_simple_consumer(consumer_group=b'event_group', reset_offset_on_start=False, auto_offset_reset=OffsetType.LATEST)
-
-    # This is blocking - it will wait for a new message
-    for msg in consumer:
+    for msg in kafka_wrapper.messages():
         msg_str = msg.value.decode('utf-8')
         msg = json.loads(msg_str)
-        logger.info(f"Message: {msg}" )
+        logger.info(f"Message: {msg}")
         payload = msg["payload"]
 
         if msg["type"] == "search_readings":
@@ -120,9 +200,7 @@ def process_messages():
             session.add(pr)
             session.commit()
             session.close()
-            
-            logger.debug(f'Stored event purchase_reading with trace id {payload["trace_id"]}')
-        consumer.commit_offsets()
+
 
 def setup_kafka_thread():
     t1 = Thread(target=process_messages)
