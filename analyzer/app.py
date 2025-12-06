@@ -143,6 +143,10 @@ def get_reading_stats():
     except Exception as e:
         logger.error(f"Error reading stats from Kafka: {e}")
         return {"message": "Error retrieving stats"}, 500
+    
+def health():
+    return "OK", 200
+
 
 
 app = connexion.FlaskApp(__name__, specification_dir='')

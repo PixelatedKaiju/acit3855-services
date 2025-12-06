@@ -205,6 +205,8 @@ def setup_kafka_thread():
     t1.setDaemon(True)
     t1.start()
 
+def health():
+    return "OK", 200
 
 
 app = connexion.FlaskApp(__name__, specification_dir='')

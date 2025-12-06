@@ -111,6 +111,9 @@ def init_scheduler():
     )
     sched.start()
 
+def health():
+    return "OK", 200
+
 
 app = connexion.FlaskApp(__name__, specification_dir='')
 

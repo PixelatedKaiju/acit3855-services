@@ -141,6 +141,26 @@ services:
       - analyzer
     restart: always
 
+  healthcheck:
+    build:
+      context: ./healthcheck
+      dockerfile: Dockerfile
+    depends_on:
+      - storage
+      - processing
+      - analyzer
+      - receiver
+    environment:
+      - TARGET_ENV=test
+    ports:
+      - "8120:8120"
+    volumes:
+      - ./config/healthcheck/app_conf.yml:/config/app_conf.yml
+      - ./config/healthcheck/log_conf.yml:/config/log_conf.yml
+      - ./config/healthcheck/grocery_api.yml:/config/grocery_api.yml
+      - ./logs:/logs
+      - ./data/healthcheck:/data
+    restart: always
 volumes:
   zookeeper-data:
   mysql-data:

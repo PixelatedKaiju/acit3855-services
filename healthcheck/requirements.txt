@@ -1,0 +1,6 @@
+connexion[flask,uvicorn,swagger-ui]
+httpx
+APScheduler
+PyYAML
+requests
+python-json-logger

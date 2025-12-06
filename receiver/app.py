@@ -171,6 +171,9 @@ def report_sold_readings(body):
         
     return NoContent, 201
 
+def health():
+    return "OK", 200
+
 
 app = connexion.FlaskApp(__name__, specification_dir='')
 app.add_api("/config/grocery_api.yml")

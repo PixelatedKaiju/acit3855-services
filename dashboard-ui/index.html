@@ -61,38 +61,45 @@
             <div>Last Updated: <span id="lastUpdate">Loading...</span></div>
         </div>
 
-        <div class="dashboard-grid">
-            <div class="card">
-                <h2>Processing Statistics</h2>
-                <div id="processingStats">Loading…</div>
-            </div>
-
-            <div class="card">
-                <h2>Analyzer Statistics</h2>
-                <div id="analyzerStats">Loading…</div>
-            </div>
+    <div class="dashboard-grid">
+        <div class="card">
+            <h2>Processing Statistics</h2>
+            <div id="processingStats">Loading…</div>
         </div>
 
-        <div class="dashboard-grid">
-            <div class="card">
-                <h2>Recent Search Event</h2>
-                <div id="searchEvent">Loading…</div>
-            </div>
+        <div class="card">
+            <h2>Analyzer Statistics</h2>
+            <div id="analyzerStats">Loading…</div>
+        </div>
+    </div>
 
-            <div class="card">
-                <h2>Recent Purchase Event</h2>
-                <div id="purchaseEvent">Loading…</div>
-            </div>
+    <div class="dashboard-grid">
+        <div class="card">
+            <h2>Health Status</h2>
+            <div id="healthStatus">Loading…</div>
+        </div>
+    </div>   
+
+    <div class="dashboard-grid">
+        <div class="card">
+            <h2>Recent Search Event</h2>
+            <div id="searchEvent">Loading…</div>
+        </div>
+
+        <div class="card">
+            <h2>Recent Purchase Event</h2>
+            <div id="purchaseEvent">Loading…</div>
         </div>
     </div>
 
 <script>
     // Correct API paths based on your grocery_api.yml
     const CONFIG = {
-        processingStatsUrl: 'http://74.249.82.254:8100/stats',
-        analyzerStatsUrl: 'http://74.249.82.254:8110/stats',
-        searchEventUrl: 'http://74.249.82.254:8110/product/search?index=',
-        purchaseEventUrl: 'http://74.249.82.254:8110/product/sold?index=',
+        processingStatsUrl: 'http://localhost:8100/stats',
+        analyzerStatsUrl: 'http://localhost:8110/stats',
+        searchEventUrl: 'http://localhost:8110/product/search?index=',
+        purchaseEventUrl: 'http://localhost:8110/product/sold?index=',
+        healthStatusUrl: 'http://localhost:8120/health/status',
         updateInterval: 3000
     };
 
@@ -182,16 +189,38 @@
         }
     }
 
+    async function fetchHealthStatus() {
+        try {
+            const res = await fetch(CONFIG.healthStatusUrl);
+            const data = await res.json();
+
+            document.getElementById('healthStatus').innerHTML = `
+                <div class="stat-row"><b>Receiver:</b> <span>${data.receiver}</span></div>
+                <div class="stat-row"><b>Storage:</b> <span>${data.storage}</span></div>
+                <div class="stat-row"><b>Processing:</b> <span>${data.processing}</span></div>
+                <div class="stat-row"><b>Analyzer:</b> <span>${data.analyzer}</span></div>
+                <div class="stat-row"><b>Last Update:</b> <span>${new Date(data.last_update).toLocaleString()}</span></div>
+            `;
+        } catch {
+            document.getElementById('healthStatus').innerHTML =
+                `<div class="error">Unable to load health status</div>`;
+        }
+    }
+
+
     function updateDashboard() {
         fetchProcessingStats();
         fetchAnalyzerStats();
         fetchSearchEvent();
         fetchPurchaseEvent();
+        fetchHealthStatus();
     }
 
     updateDashboard();
     setInterval(updateDashboard, CONFIG.updateInterval);
 </script>
+
+    </div>
 
 </body>
 </html>
